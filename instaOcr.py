@@ -16,7 +16,8 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 cl = Client()
 cl.login(os.environ['LOGIN_USER'], os.environ['PASSWORD'])
 
-USERS = ["adityasanehi","vegnonveg","rise.camp.in","superkicksindia"]
+
+USERS = json.loads(os.environ['USERS_MONITORED'])
 
 i = 0
 
