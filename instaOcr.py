@@ -15,7 +15,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 cl = Client()
 cl.login("streetwards", "Adi26tya@")
 
-USERS = ["adityasanehi","vegnonveg"]
+USERS = ["adityasanehi","vegnonveg","rise.camp.in","superkicks"]
 
 i = 0
 
