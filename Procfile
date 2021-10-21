@@ -1,0 +1,1 @@
+checker: python instaOcr.py
