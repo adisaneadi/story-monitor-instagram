@@ -51,17 +51,20 @@ while True:
                 data["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
                 data["embeds"] = []
                 embed = {}
-                embed["title"] = f'**NEW STORY** - @{userStory}'  # Item Name
-                embed['url'] = f'https://www.instagram.com/{userStory}'  # Item link
-                embed["image"] = {'url': newStory}  # Item image
+                embed["title"] = f'**NEW STORY** - @{userStory}'  # NEW STORY ALERT TITLE
+                embed['url'] = f'https://www.instagram.com/{userStory}'  # USER LINK
+                embed["image"] = {'url': newStory}  # STORY URL
+                
                 if storiesScrape[-1].mentions!=[]:
-
+                    
                     mentionsInStory = []
+                    
                     for mentionsStory in storiesScrape[-1].mentions:
                         print(mentionsStory.user.username)
                         mentionsInStory.append(f'[{mentionsStory.user.username}](https://www.instagram.com/{mentionsStory.user.username})')
-
+                        
                     embed["fields"] = [{'name':'Mentions:', 'value':f'{mentionsInStory}','inline':False}]
+                    
                 embed["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
                 embed["color"] = 932478
                 embed["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
