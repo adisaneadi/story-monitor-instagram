@@ -7,6 +7,9 @@ import time
 import pytesseract as ocr
 from PIL import Image
 import io
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 cl = Client()
 cl.login("typicalbrownboiii", "Adi2607tya@")
