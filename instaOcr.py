@@ -62,7 +62,7 @@ while True:
 
                     embed["fields"] = [{'name':'Mentions:', 'value':f'{mentionsInStory}','inline':False}]
                 embed["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
-                embed["color"] = 1752220
+                embed["color"] = 932478
                 embed["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
                 embed["timestamp"] = str(datetime.datetime.utcnow())
                 data["embeds"].append(embed)
@@ -78,7 +78,7 @@ while True:
                 embed1['url'] = f'https://www.instagram.com/{userStory}'  # Item link
                 embed1["fields"] = [{'name':'OCR Processed Text', 'value':f'{ocrImage.strip()}','inline':False}]
                 embed1["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
-                embed1["color"] = 1752220
+                embed1["color"] = 11393254
                 embed1["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
                 embed1["timestamp"] = str(datetime.datetime.utcnow())
                 data1["embeds"].append(embed1)
