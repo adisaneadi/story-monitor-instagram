@@ -90,6 +90,6 @@ while True:
         else:
             print(f'    [EVENT] MONITOR INITIATED FOR USER - @{userStory}!')
         j = j+1
-        time.sleep(5)
+        time.sleep(int(os.environ['USER_TIMEOUT']))
     i = i+1       
-    time.sleep(20)
+    time.sleep(int(os.environ['DELAY']))
