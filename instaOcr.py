@@ -1,7 +1,6 @@
 from instagrapi import Client
 from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
 import json
-import discord
 import datetime
 import requests
 import time
