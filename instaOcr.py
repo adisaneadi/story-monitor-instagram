@@ -7,13 +7,14 @@ import time
 import pytesseract as ocr
 from PIL import Image
 import io
+import os
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 cl = Client()
-cl.login("streetwards", "Adi26tya@")
+cl.login(os.environ['LOGIN_USER'], os.environ['PASSWORD'])
 
 USERS = ["adityasanehi","vegnonveg","rise.camp.in","superkicks"]
 
@@ -22,6 +23,7 @@ i = 0
 storiesList = []
 for userno in USERS:
     storiesList.append([])
+    
 while True:
     print(f'[COUNTER] Cycle #{i}')
     j = 0
@@ -65,7 +67,7 @@ while True:
                 embed["timestamp"] = str(datetime.datetime.utcnow())
                 data["embeds"].append(embed)
 
-                result = requests.post("https://discord.com/api/webhooks/853676514095398943/XgfF9_7JLmSKv7YBF0PueoZo9jKcuzAuPLEFHf602f8QVpp8Y5hPSmoGe6hLDvseaZAs", data=json.dumps(data), headers={"Content-Type": "application/json"})
+                result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
 
                 data1 = {}
                 data1["username"] = "Instagram [Stories]"
@@ -81,7 +83,7 @@ while True:
                 embed1["timestamp"] = str(datetime.datetime.utcnow())
                 data1["embeds"].append(embed1)
 
-                result = requests.post("https://discord.com/api/webhooks/853676514095398943/XgfF9_7JLmSKv7YBF0PueoZo9jKcuzAuPLEFHf602f8QVpp8Y5hPSmoGe6hLDvseaZAs", data=json.dumps(data1), headers={"Content-Type": "application/json"})
+                result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data1), headers={"Content-Type": "application/json"})
                 print('    [EVENT] CHANGE DETECTED, WEBHOOK SENT!')
             else:
                 print('    [EXCEPTION] LAST STORY ID IS THE SAME!')
