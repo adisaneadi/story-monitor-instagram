@@ -72,8 +72,7 @@ while True:
                 data["embeds"].append(embed)
 
                 result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
-                
-                time.sleep(3)
+             
                 
                 data1 = {}
                 data1["username"] = "Instagram [Stories]"
