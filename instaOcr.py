@@ -72,7 +72,8 @@ while True:
                 data["embeds"].append(embed)
 
                 result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
-             
+                
+                print(ocrImage.strip())
                 
                 data1 = {}
                 data1["username"] = "Instagram [Stories]"
