@@ -73,23 +73,27 @@ while True:
 
                 result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
                 
-                print(ocrImage.strip())
-                
-                data1 = {}
-                data1["username"] = "Instagram [Stories]"
-                data1["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
-                data1["embeds"] = []
-                embed1 = {}
-                embed1["title"] = f'**IMAGE OCR** - [{storyID}]'  # Item Name
-                embed1['url'] = f'https://www.instagram.com/{userStory}'  # Item link
-                embed1["fields"] = [{'name':'OCR Processed Text', 'value':f'{ocrImage.strip()}','inline':False}]
-                embed1["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
-                embed1["color"] = 11393254
-                embed1["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
-                embed1["timestamp"] = str(datetime.datetime.utcnow())
-                data1["embeds"].append(embed1)
+                print(f'    [PROCESSED RESULTS] {ocrImage.strip()}')
+                try: 
+                    data1 = {}
+                    data1["username"] = "Instagram [Stories]"
+                    data1["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
+                    data1["embeds"] = []
+                    embed1 = {}
+                    embed1["title"] = f'**IMAGE OCR** - [{storyID}]'  # Item Name
+                    embed1['url'] = f'https://www.instagram.com/{userStory}'  # Item link
+                    embed1["fields"] = [{'name':'OCR Processed Text', 'value':f'{ocrImage.strip()}','inline':False}]
+                    embed1["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
+                    embed1["color"] = 11393254
+                    embed1["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
+                    embed1["timestamp"] = str(datetime.datetime.utcnow())
+                    data1["embeds"].append(embed1)
 
-                result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data1), headers={"Content-Type": "application/json"})
+                    result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data1), headers={"Content-Type": "application/json"})
+                except:
+                    
+                    print('    [EXCEPTION] NO OCR PROCESSED!')
+                    
                 print('    [EVENT] CHANGE DETECTED, WEBHOOK SENT!')
             else:
                 print('    [EXCEPTION] LAST STORY ID IS THE SAME!')
