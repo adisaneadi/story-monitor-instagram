@@ -105,6 +105,7 @@ while True:
             time.sleep(int(os.environ['USER_TIMEOUT']))
             
         except:
+            storiesList[j].append("NO STORY")
             print(f'    [EXCEPTION] NO STORY UPLOADED FOR USER - {userStory}')
             
         
