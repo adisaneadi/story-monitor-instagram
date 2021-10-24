@@ -12,7 +12,6 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-
 cl = Client()
 #cl.login(os.environ['LOGIN_USER'], os.environ['PASSWORD'])
 cl.login_by_sessionid(os.environ['SESSION_ID'])
