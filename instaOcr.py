@@ -101,13 +101,13 @@ while True:
                     print('    [EXCEPTION] LAST STORY ID IS THE SAME!')
             else:
                 print(f'    [EVENT] MONITOR INITIATED FOR USER - @{userStory}!')
-            j = j+1
+            
             time.sleep(int(os.environ['USER_TIMEOUT']))
             
         except:
             storiesList[j].append("NO STORY")
             print(f'    [EXCEPTION] NO STORY UPLOADED FOR USER - {userStory}')
-            
+        j = j+1    
         
     i = i+1       
     time.sleep(int(os.environ['DELAY']))
