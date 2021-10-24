@@ -28,78 +28,86 @@ for userno in USERS:
 while True:
     print(f'[COUNTER] Cycle #{i}')
     j = 0
-    for userStory in USERS:
+    
+    for userStory in USERS:        
         print(f' [CHECKING USER] - {userStory} - User #{j+1}')
         userID = cl.user_id_from_username(userStory)
         print(f'    [CHECKING USER] USER ID - {userID}')
-        storiesScrape = cl.user_stories(userID) 
-        userProfilePic = storiesScrape[-1].user.profile_pic_url
-        storyID = storiesScrape[-1].pk
-        print(f'    [CHECK] LAST STORY ID - {storyID}')
-        newStory = storiesScrape[-1].thumbnail_url
-        storiesList[j].append(storyID)
-        if i!=0:
-            if storiesList[j][i]!=storiesList[j][i-1]:
-                responseImage = requests.get(newStory)
+        
+        try:          
+            storiesScrape = cl.user_stories(userID) 
+            userProfilePic = storiesScrape[-1].user.profile_pic_url
+            storyID = storiesScrape[-1].pk
+            print(f'    [CHECK] LAST STORY ID - {storyID}')
+            newStory = storiesScrape[-1].thumbnail_url
+            storiesList[j].append(storyID)
+            if i!=0:
+                if storiesList[j][i]!=storiesList[j][i-1]:
+                    responseImage = requests.get(newStory)
 
-                imgRaw = Image.open(io.BytesIO(responseImage.content))
+                    imgRaw = Image.open(io.BytesIO(responseImage.content))
 
-                ocrImage = ocr.image_to_string(imgRaw)
+                    ocrImage = ocr.image_to_string(imgRaw)
 
-                data = {}
-                data["username"] = "Instagram [Stories]"
-                data["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
-                data["embeds"] = []
-                embed = {}
-                embed["title"] = f'**NEW STORY** - @{userStory}'  # NEW STORY ALERT TITLE
-                embed['url'] = f'https://www.instagram.com/{userStory}'  # USER LINK
-                embed["image"] = {'url': newStory}  # STORY URL
-                
-                if storiesScrape[-1].mentions!=[]:
-                    
-                    mentionsInStory = []
-                    
-                    for mentionsStory in storiesScrape[-1].mentions:
-                        print(mentionsStory.user.username)
-                        mentionsInStory.append(f'[{mentionsStory.user.username}](https://www.instagram.com/{mentionsStory.user.username})')
-                        
-                    embed["fields"] = [{'name':'Mentions:', 'value':f'{mentionsInStory}','inline':False}]
-                    
-                embed["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
-                embed["color"] = 932478
-                embed["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
-                embed["timestamp"] = str(datetime.datetime.utcnow())
-                data["embeds"].append(embed)
+                    data = {}
+                    data["username"] = "Instagram [Stories]"
+                    data["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
+                    data["embeds"] = []
+                    embed = {}
+                    embed["title"] = f'**NEW STORY** - @{userStory}'  # NEW STORY ALERT TITLE
+                    embed['url'] = f'https://www.instagram.com/{userStory}'  # USER LINK
+                    embed["image"] = {'url': newStory}  # STORY URL
 
-                result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
-                
-                print(f'    [PROCESSED RESULTS] {ocrImage.strip()}')
-                try: 
-                    data1 = {}
-                    data1["username"] = "Instagram [Stories]"
-                    data1["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
-                    data1["embeds"] = []
-                    embed1 = {}
-                    embed1["title"] = f'**IMAGE OCR** - [{storyID}]'  # Item Name
-                    embed1['url'] = f'https://www.instagram.com/{userStory}'  # Item link
-                    embed1["fields"] = [{'name':'OCR Processed Text', 'value':f'{ocrImage.strip()}','inline':False}]
-                    embed1["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
-                    embed1["color"] = 11393254
-                    embed1["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
-                    embed1["timestamp"] = str(datetime.datetime.utcnow())
-                    data1["embeds"].append(embed1)
+                    if storiesScrape[-1].mentions!=[]:
 
-                    result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data1), headers={"Content-Type": "application/json"})
-                except:
-                    
-                    print('    [EXCEPTION] NO OCR PROCESSED!')
-                    
-                print('    [EVENT] CHANGE DETECTED, WEBHOOK SENT!')
+                        mentionsInStory = []
+
+                        for mentionsStory in storiesScrape[-1].mentions:
+                            print(mentionsStory.user.username)
+                            mentionsInStory.append(f'[{mentionsStory.user.username}](https://www.instagram.com/{mentionsStory.user.username})')
+
+                        embed["fields"] = [{'name':'Mentions:', 'value':f'{mentionsInStory}','inline':False}]
+
+                    embed["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
+                    embed["color"] = 932478
+                    embed["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
+                    embed["timestamp"] = str(datetime.datetime.utcnow())
+                    data["embeds"].append(embed)
+
+                    result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data), headers={"Content-Type": "application/json"})
+
+                    print(f'    [PROCESSED RESULTS] {ocrImage.strip()}')
+                    try: 
+                        data1 = {}
+                        data1["username"] = "Instagram [Stories]"
+                        data1["avatar_url"] = "https://i.imgur.com/NeJAV1h.jpg"
+                        data1["embeds"] = []
+                        embed1 = {}
+                        embed1["title"] = f'**IMAGE OCR** - [{storyID}]'  # Item Name
+                        embed1['url'] = f'https://www.instagram.com/{userStory}'  # Item link
+                        embed1["fields"] = [{'name':'OCR Processed Text', 'value':f'{ocrImage.strip()}','inline':False}]
+                        embed1["author"]= {'name': f'{userStory}','url': f'https://www.instagram.com/{userStory}', 'icon_url': f'{userProfilePic}'}
+                        embed1["color"] = 11393254
+                        embed1["footer"] = {'text': 'Instagram Stories | HeavyDrop Profits', 'icon_url':'https://i.imgur.com/NeJAV1h.jpg'}
+                        embed1["timestamp"] = str(datetime.datetime.utcnow())
+                        data1["embeds"].append(embed1)
+
+                        result = requests.post(os.environ['WEBHOOK'], data=json.dumps(data1), headers={"Content-Type": "application/json"})
+                    except:
+
+                        print('    [EXCEPTION] NO OCR PROCESSED!')
+
+                    print('    [EVENT] CHANGE DETECTED, WEBHOOK SENT!')
+                else:
+                    print('    [EXCEPTION] LAST STORY ID IS THE SAME!')
             else:
-                print('    [EXCEPTION] LAST STORY ID IS THE SAME!')
-        else:
-            print(f'    [EVENT] MONITOR INITIATED FOR USER - @{userStory}!')
-        j = j+1
-        time.sleep(int(os.environ['USER_TIMEOUT']))
+                print(f'    [EVENT] MONITOR INITIATED FOR USER - @{userStory}!')
+            j = j+1
+            time.sleep(int(os.environ['USER_TIMEOUT']))
+            
+        except:
+            print(f'    [EXCEPTION] NO STORY UPLOADED FOR USER - {userStory}')
+            
+        
     i = i+1       
     time.sleep(int(os.environ['DELAY']))
